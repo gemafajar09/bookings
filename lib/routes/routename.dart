@@ -7,4 +7,5 @@ class RouteName {
   static const sertifikat = '/sertifikat';
   static const pertemuan = '/pertemuan';
   static const bookingjadwal = '/bookingjadwal';
+  static const profile = '/profile';
 }

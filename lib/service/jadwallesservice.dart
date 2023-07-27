@@ -10,7 +10,7 @@ class JadwallesService {
 
   Future<dynamic> getjadwal(String id) async {
     final user = box.read('dataUser') as Map<String, dynamic>;
-    final data = await client.get(Uri.parse(Url.jadwalles + "/$id"),headers: {
+    final data = await client.get(Uri.parse("${Url.jadwalles}/$id"),headers: {
       'Content-type': 'application/json',
       'Authorization'  : 'Bearer ${user['token']}'
     });
@@ -23,7 +23,7 @@ class JadwallesService {
 
   Future<dynamic> getkelas(String id) async {
     final user = box.read('dataUser') as Map<String, dynamic>;
-    final data = await client.get(Uri.parse(Url.kelasuser + "/$id"),headers: {
+    final data = await client.get(Uri.parse("${Url.kelasuser}/$id"),headers: {
       'Content-type': 'application/json',
       'Authorization'  : 'Bearer ${user['token']}'
     });
@@ -45,7 +45,6 @@ class JadwallesService {
           'Content-type': 'application/json',
           'Authorization'  : 'Bearer ${user['token']}'
         });
-
     if (res.statusCode == 200) {
       return json.decode(res.body);
     } else {

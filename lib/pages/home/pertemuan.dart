@@ -13,13 +13,13 @@ class Pertemuan extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height / 7.8,
+                  height: MediaQuery.of(context).size.height / 9.5,
                   width: MediaQuery.of(context).size.width / 1,
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 7, 44, 143),
+                    color: Color.fromARGB(255, 4, 88, 156),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
                     ),
                     boxShadow: [
                       BoxShadow(

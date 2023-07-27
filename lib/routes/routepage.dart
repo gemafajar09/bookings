@@ -9,6 +9,7 @@ import 'package:bookings/pages/home/booking.dart';
 import 'package:bookings/pages/home/bookingjadwal.dart';
 import 'package:bookings/pages/home/home.dart';
 import 'package:bookings/pages/home/pertemuan.dart';
+import 'package:bookings/pages/home/profile.dart';
 import 'package:bookings/pages/home/sertifikat.dart';
 import 'package:bookings/routes/routename.dart';
 import 'package:get/get.dart';
@@ -48,6 +49,10 @@ class RoutePage {
       name: RouteName.bookingjadwal,
       page: () => Bookingjadwal(),
       binding: BookingBinding(),
+    ),
+    GetPage(
+      name: RouteName.profile,
+      page: () => Profile(),
     ),
   ];
 }

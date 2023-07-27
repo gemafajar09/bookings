@@ -46,10 +46,10 @@ class BookingController extends GetxController {
     super.onInit();
     tanggals = TextEditingController();
     tanggals.clear();
+
     jams.value = '09:00';
+
     await GetStorage.init();
-    kelasu.value = kelasuser[0].idKelas.toString();
-    idmentor.value = mentor[0].idMentor.toString();
     final box = GetStorage();
     final data = box.read('dataUser') as Map<String, dynamic>;
 
@@ -77,10 +77,10 @@ class BookingController extends GetxController {
     try {
       isLoading.value = true;
       var mentors = await homenservice.mentor();
+      idmentor.value = mentors[0]['id_mentor'].toString();
       mentors.forEach((item) {
         mentor.add(Mentor.fromJson(item));
       });
-
       isLoading.value = false;
     } catch (err) {
       Get.defaultDialog(
@@ -93,8 +93,9 @@ class BookingController extends GetxController {
   void getKelas(id) async {
     try {
       isLoading.value = true;
-      var users = await jadwals.getkelas(id);
-      users.forEach((item) {
+      var kelas = await jadwals.getkelas(id);
+      kelasu.value = kelas[0]['id_kelas'].toString();
+      kelas.forEach((item) {
         kelasuser.add(Kelasuser.fromJson(item));
       });
 
@@ -122,8 +123,8 @@ class BookingController extends GetxController {
   void getJadwal(id) async {
     try {
       isLoading.value = true;
-      var banners = await jadwals.getjadwal(id);
-      banners.forEach((item) {
+      var jadwalkelas = await jadwals.getjadwal(id);
+      jadwalkelas.forEach((item) {
         jadwal.add(Jadwalles.fromJson(item));
       });
 
