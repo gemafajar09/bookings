@@ -1,5 +1,5 @@
 class Url {
-  static const url = "http://192.168.100.214:8000/api/";
+  static const url = "http://192.168.1.12:8000/api/";
 
   static const login = "${url}login";
   static const getuser = "${url}getuser";

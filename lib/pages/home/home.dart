@@ -12,166 +12,183 @@ class Home extends StatelessWidget {
   final qrC = Get.find<ScanqrController>();
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.height;
+    var tinggi = screenWidth / 9;
+    if(screenWidth >= 800){
+      var tinggi = screenWidth / 10;
+    }
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height / 1,
-            child: Obx(
-              () => Stack(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height / 7.9,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 4, 88, 156),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const CircleAvatar(
-                                maxRadius: 23,
-                                backgroundColor:
-                                    Color.fromARGB(255, 250, 249, 248),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+      body: OrientationBuilder(
+        builder: (context, orientation){
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height / 1,
+                child: Obx(
+                      () => Stack(
+                    children: [
+                      Container(
+                        height: tinggi,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 4, 88, 156),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          )
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              child: Row(
                                 children: [
-                                  const Text(
-                                    "Selamat Datang",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                                  InkWell(
+                                    onTap : () => Get.toNamed(RouteName.profile),
+                                    child: const CircleAvatar(
+                                      maxRadius: 23,
+                                      backgroundColor:
+                                      Color.fromARGB(255, 250, 249, 248),
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 3,
+                                    width: 8,
                                   ),
-                                  Text(
-                                    "${homeC.nama}",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 14,
-                                    ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Selamat Datang",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(
+                                        "${homeC.nama}",
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: CircleAvatar(
+                                child: IconButton(
+                                  onPressed: () {
+                                    qrC.scanqr();
+                                  },
+                                  icon: const Icon(
+                                    Icons.qr_code,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      // content
+                      Positioned(
+                        top: MediaQuery.of(context).size.height / 9.5,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 1,
+                          height: MediaQuery.of(context).size.height / 1,
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 255, 254, 254),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CarouselSlider(
+                                options: CarouselOptions(
+                                  autoPlay: true,
+                                  aspectRatio: 2.0,
+                                  enlargeCenterPage: true,
+                                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                                ),
+                                items: homeC.banner
+                                    .map(
+                                      (item) => bannerList(item.gambar, size),
+                                )
+                                    .toList(),
+                              ),
+                              // menu list
+                              menuList(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              // name mentor
+                              const Padding(
+                                padding:
+                                EdgeInsets.only(top: 5.0, left: 22, right: 22),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Mentor",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("Show All"),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Icon(Icons.arrow_circle_right),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 2.6,
+                                margin: const EdgeInsets.only(left: 10),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: homeC.mentor.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    return listData(homeC.mentor[i], size);
+                                  },
+                                ),
+                              )
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(9.0),
-                          child: CircleAvatar(
-                            child: IconButton(
-                              onPressed: () {
-                                qrC.scanqr();
-                              },
-                              icon: const Icon(
-                                Icons.qr_code,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  // content
-                  Positioned(
-                    top: MediaQuery.of(context).size.height / 8.5,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1,
-                      height: MediaQuery.of(context).size.height / 1,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 255, 254, 254),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                        ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CarouselSlider(
-                            options: CarouselOptions(
-                              autoPlay: true,
-                              aspectRatio: 2.0,
-                              enlargeCenterPage: true,
-                              enlargeStrategy: CenterPageEnlargeStrategy.height,
-                            ),
-                            items: homeC.banner
-                                .map(
-                                  (item) => bannerList(item.gambar, size),
-                                )
-                                .toList(),
-                          ),
-                          // menu list
-                          menuList(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // name mentor
-                          const Padding(
-                            padding:
-                                EdgeInsets.only(top: 5.0, left: 22, right: 22),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Mentor",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text("Show All"),
-                                    SizedBox(
-                                      width: 2,
-                                    ),
-                                    Icon(Icons.arrow_circle_right),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height / 2.6,
-                            margin: const EdgeInsets.only(left: 10),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: homeC.mentor.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, i) {
-                                return listData(homeC.mentor[i], size);
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
+
       ),
     );
   }
